@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <p>{{ text }}</p>
-  </div>
+  <div></div>
 </template>
 
 <script src="./Home.js"></script>

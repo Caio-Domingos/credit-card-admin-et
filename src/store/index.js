@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import cards from './modules/cards';
 import brands from './modules/brands';
 import categories from './modules/categories';
+import auth from './modules/auth';
 
 Vue.use(Vuex);
 
@@ -16,5 +17,6 @@ export default new Vuex.Store({
     cards,
     brands,
     categories,
+    auth,
   },
 });
