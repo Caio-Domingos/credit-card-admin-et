@@ -1,5 +1,16 @@
-div {
-  p {
-    color: red;
-  }
+#Home {
+}
+
+#Home .card-list {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+}
+
+#Home .card-content {
+  margin: 0 auto;
+
+  width: 90%;
+  min-width: 300px;
+  max-width: 450px;
 }
