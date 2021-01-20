@@ -12,6 +12,7 @@ import {
   faUpload,
   faExclamationCircle,
   faCreditCard,
+  faArrowLeft,
   faDollarSign,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -27,6 +28,7 @@ library.add(
   faUpload,
   faExclamationCircle,
   faCreditCard,
+  faArrowLeft,
   faDollarSign
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);

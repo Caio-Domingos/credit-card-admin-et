@@ -1,7 +1,9 @@
 <template>
-  <div id="app" class="content">
+  <div id="app">
     <Nav />
-    <router-view />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -33,9 +35,14 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    padding: 16px;
 
     min-height: 100vh;
+
+    .content {
+      margin: 0 auto;
+      max-width: 960px;
+      padding: 8px;
+    }
   }
 
   .t-capitalize {
