@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="flex: 1">
     <div v-if="card" id="Card" :style="{ backgroundColor: brand.backgroundColor }">
       <span v-if="brand.imgBrand" class="card-brand">
         <img :src="`${brandImgs[brand.imgBrand]}`" alt="" />
@@ -8,7 +8,7 @@
         <span>Name: {{ card.name }}</span>
         <span> - {{ category.category }}</span>
       </div>
-      <div class="card-footer">
+      <div class="card-bottom">
         <span v-if="card.creditCardLimit">Credit Card Limit - {{ card.creditCardLimit }}</span>
         <span v-if="card.feeAmount">Fee Amount - {{ card.feeAmount }}</span>
       </div>

@@ -2,14 +2,15 @@
   <div id="Home">
     <h1>Card List</h1>
     <div class="card-list">
-      <div class="card-content" v-for="(item, index) in cards" :key="index">
+      <div class="card-content mb-5" v-for="(item, index) in cards" :key="index">
         <Card v-bind:card="item" />
-        <div class="options-buttons-content">
-          <button class="btn btn-edit">
-            <font-awesome-icon icon="plus" size="lg" /></button
-          ><button class="btn btn-delete">
-            <font-awesome-icon icon="plus" size="lg" />
-          </button>
+        <div class="option-buttons-content">
+          <a class="button is-warning mb-2">
+            <font-awesome-icon icon="edit" size="lg" />
+          </a>
+          <a class="button is-danger">
+            <font-awesome-icon icon="times" size="lg" />
+          </a>
         </div>
       </div>
       <div class="card-content">
