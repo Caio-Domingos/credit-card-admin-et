@@ -16,6 +16,8 @@ import {
   faCreditCard,
   faArrowLeft,
   faSearch,
+  faEnvelope,
+  faLock,
   faDollarSign,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,6 +37,8 @@ library.add(
   faCreditCard,
   faArrowLeft,
   faSearch,
+  faEnvelope,
+  faLock,
   faDollarSign
 );
 // register jw pagination component globally

@@ -1,28 +1,35 @@
 <template>
   <div id="app">
     <Nav />
-    <div class="content">
+    <div class="content" v-if="isAuthenticated">
       <router-view />
+    </div>
+    <div class="content" v-else>
+      <Authentication />
     </div>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import Nav from './components/Nav/Nav.vue';
+  import Authentication from './components/Authentication/Authentication.vue';
 
   export default {
     data() {
       return {};
     },
-    components: { Nav },
-    computed: {},
+    components: { Nav, Authentication },
+    computed: {
+      ...mapGetters(['isAuthenticated']),
+    },
     methods: {
-      ...mapActions(['populateCards']),
+      ...mapActions(['populateCards', 'populateAuthState']),
     },
     created() {
       console.log('CREATING APP...');
       this.populateCards();
+      this.populateAuthState();
     },
   };
 </script>
