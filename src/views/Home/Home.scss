@@ -1,4 +1,11 @@
 #Home {
+  .filter-content {
+    margin: auto;
+    width: 90%;
+    min-width: 300px;
+    max-width: 450px;
+  }
+
   .card-list {
     margin: 0 auto;
     width: 100%;
@@ -44,6 +51,35 @@
           flex-direction: column;
         }
       }
+    }
+  }
+}
+
+.pagination {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  list-style: none !important;
+
+  margin: 0 !important;
+  margin-top: 10px !important;
+
+  li.page-item {
+    margin: 5px;
+    &.first,
+    &.last {
+      display: none;
+    }
+
+    padding: 10px 20px;
+    // border: 1px solid #00000060;
+    background-color: hsl(0, 0%, 96%);
+    color: hsl(0, 0%, 21%);
+    border-radius: 5px;
+
+    &.active {
+      background-color: hsl(171, 100%, 41%);
+      color: #fff;
     }
   }
 }

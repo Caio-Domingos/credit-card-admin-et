@@ -3,11 +3,15 @@ import Swal from 'sweetalert2';
 
 import Card from './../../components/Card/Card.vue';
 
+// eslint-disable-next-line no-unused-vars
+
 export default {
   components: { Card },
   data() {
     return {
+      _cards: [],
       cards: [],
+      pageCards: [],
     };
   },
   computed: {
@@ -16,7 +20,7 @@ export default {
     }),
   },
   created() {
-    this.cards = this.getAllCards.sort(function(a, b) {
+    this._cards = this.getAllCards.sort(function(a, b) {
       if (a.name > b.name) {
         return 1;
       }
@@ -26,7 +30,9 @@ export default {
       // a must be equal to b
       return 0;
     });
-    console.log('Cards', this.cards);
+
+    this.cards = this._cards;
+    console.log('Cards', this._cards);
   },
   methods: {
     ...mapActions({
@@ -55,6 +61,43 @@ export default {
           this.delete$(id);
         }
       });
+    },
+
+    changeFilter(event) {
+      const value = event.target.value.toLowerCase();
+      const verificationLength = event.target.value.length;
+
+      if (!value) this.cards = this._cards;
+      else {
+        this.cards = this._cards.filter(
+          card => card.name.substr(0, verificationLength).toLowerCase() === value
+        );
+      }
+    },
+
+    changePage(pageOfItems) {
+      console.log('on change page!');
+      this.pageCards = pageOfItems;
+      this.scrollToTop();
+    },
+
+    scrollToTop() {
+      if (document.scrollingElement.scrollTop === 0) return;
+
+      const totalScrollDistance = document.scrollingElement.scrollTop;
+      let scrollY = totalScrollDistance,
+        oldTimestamp = null;
+
+      function step(newTimestamp) {
+        if (oldTimestamp !== null) {
+          scrollY -= (totalScrollDistance * (newTimestamp - oldTimestamp)) / 1000;
+          if (scrollY <= 0) return (document.scrollingElement.scrollTop = 0);
+          document.scrollingElement.scrollTop = scrollY;
+        }
+        oldTimestamp = newTimestamp;
+        window.requestAnimationFrame(step);
+      }
+      window.requestAnimationFrame(step);
     },
   },
 };
