@@ -2,13 +2,13 @@
   <div id="Home">
     <h1>Card List</h1>
     <div class="card-list">
-      <div class="card-content mb-5" v-for="(item, index) in cards" :key="index">
+      <div class="card-content mb-5" v-for="item in cards" :key="item.id">
         <Card v-bind:card="item" />
         <div class="option-buttons-content">
           <a class="button is-warning mb-2" @click="goEdit(item.id)">
             <font-awesome-icon icon="edit" size="lg" />
           </a>
-          <a class="button is-danger">
+          <a class="button is-danger" @click="deleteCard(item.id)">
             <font-awesome-icon icon="times" size="lg" />
           </a>
         </div>

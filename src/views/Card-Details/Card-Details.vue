@@ -1,6 +1,6 @@
 <template>
   <div id="Card-Details">
-    <form id="card-form" @submit="checkForm" method="post">
+    <form id="card-form" @submit="saveCard($event)" method="post">
       <div class="columns">
         <div class="field column is-6">
           <div class="columns">
@@ -134,7 +134,7 @@
                     v-model="card.brand"
                     @change="checkInput('brand', 'Brand')"
                   >
-                    <option value=""> - </option>
+                    <option :value="null"> - </option>
                     <option v-for="(item, index) in brands" :key="index" :value="item.id">{{
                       item.brand
                     }}</option>
@@ -186,7 +186,7 @@
                     v-model="card.category"
                     @change="checkInput('category', 'Category')"
                   >
-                    <option value=""> - </option>
+                    <option :value="null"> - </option>
                     <option v-for="(item, index) in categories" :key="index" :value="item.id">{{
                       item.category
                     }}</option>
@@ -224,7 +224,13 @@
             </div>
             <div class="column">
               <div class="control has-icons-left is-flex-grow-1">
-                <input class="input is-success " type="text" placeholder="Text input" />
+                <input
+                  class="input"
+                  :class="card.creditCardLimit ? 'is-success' : 'is-info'"
+                  v-model="card.creditCardLimit"
+                  type="text"
+                  placeholder="Text input"
+                />
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="credit-card" size="lg" />
                 </span>
@@ -241,7 +247,13 @@
             </div>
             <div class="column">
               <div class="control has-icons-left is-flex-grow-1">
-                <input class="input is-success " type="text" placeholder="Text input" />
+                <input
+                  class="input"
+                  :class="card.feeAmount ? 'is-success' : 'is-info'"
+                  v-model="card.feeAmount"
+                  type="text"
+                  placeholder="Text input"
+                />
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="dollar-sign" size="lg" />
                 </span>

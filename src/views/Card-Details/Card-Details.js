@@ -1,5 +1,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
+const slugify = require('slugify');
+
 export default {
   data() {
     return {
@@ -38,11 +40,15 @@ export default {
     };
   },
   created() {
-    this.setCard();
-
-    if (this.id) this.checkForm();
-    this.brands = this.brands$;
-    this.categories = this.categories$;
+    this.setCard()
+      .then(() => {
+        if (this.id) this.checkForm();
+        this.brands = this.brands$;
+        this.categories = this.categories$;
+      })
+      .catch(err => {
+        console.error('ERROR', err);
+      });
   },
   computed: {
     ...mapGetters({
@@ -53,16 +59,19 @@ export default {
   },
   methods: {
     ...mapActions({
-      newCard: 'createNewCard',
+      newCard$: 'createNewCard',
+      createId$: 'createNewIdToCard',
+      setCard$: 'setCard',
+      updateCard$: 'updateCard',
     }),
-    setCard() {
+    async setCard() {
       if (this.id) {
-        this.card = this.getCard(this.id);
+        this.card = await this.getCard(this.id);
       } else {
-        this.card = this.newCard();
+        this.card = await this.newCard$();
       }
 
-      console.log(this.card);
+      console.log('MY CARD', this.card);
     },
     // Form Handles
     checkForm() {
@@ -71,14 +80,18 @@ export default {
           key => key !== 'id' && key !== 'slug' && key !== 'creditCardLimit' && key !== 'feeAmount'
         )
         .forEach(key => {
-          console.log('key', key);
           this.checkInput(key, key.charAt(0).toUpperCase() + key.slice(1));
         });
+
+      const keysErrors = Object.keys(this.handleErrors);
+
+      const valid =
+        !keysErrors.map(key => this.handleErrors[key].valid).filter(valid => !valid).length > 0;
+
+      return valid;
     },
     checkInput(input, field, event) {
       let valid = true;
-      console.log('input', input);
-      console.log('value to verify', this.card[input]);
 
       // Name validate
       switch (input) {
@@ -112,7 +125,6 @@ export default {
 
         case 'image':
           {
-            console.log('image log', event);
             let file;
             if (event) {
               file = event.target.files[0];
@@ -135,7 +147,6 @@ export default {
 
         default:
           {
-            console.log('Default!', input);
             if (!this.card[input]) {
               valid = false;
               this.handleErrors[input].required = false;
@@ -148,8 +159,27 @@ export default {
           }
           break;
       }
+    },
+    async saveCard(event) {
+      console.log('EVENT', event);
+      event.preventDefault();
 
-      console.log(`my handle's error`, this.handleErrors);
+      const _id = this.id ? this.id : await this.createId$();
+      console.log('My ID', _id);
+      const validCard = this.checkForm();
+
+      console.log('FORM IS VALID?', validCard);
+
+      if (!validCard) return;
+
+      this.card.id = _id;
+      this.card.slug = slugify(this.card.name, '_');
+      console.log('final card', this.card);
+
+      if (this.id) await this.updateCard$(this.card);
+      else await this.setCard$(this.card);
+
+      this.$router.push('/');
     },
   },
 };

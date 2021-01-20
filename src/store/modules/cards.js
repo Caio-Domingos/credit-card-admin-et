@@ -1,95 +1,81 @@
 /* eslint-disable no-unused-vars */
 export default {
   state: {
-    cards: [
-      {
-        id: 1,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 1,
-        category: 1,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-      {
-        id: 2,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 2,
-        category: 2,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-      {
-        id: 3,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 3,
-        category: 3,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-      {
-        id: 4,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 4,
-        category: 4,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-      {
-        id: 5,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 5,
-        category: 5,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-      {
-        id: 6,
-        name: 'Teste Name',
-        slug: 'teste_name',
-        image: 'img',
-        brand: 6,
-        category: 6,
-        creditCardLimit: '1000.00',
-        feeAmount: '500.00',
-      },
-    ],
+    cards: [],
   },
   mutations: {
+    SET_CARDS: (state, payload) => {
+      console.log('SETTING CARDS...');
+
+      state.cards = payload;
+    },
     SET_CARD: (state, payload) => {
+      console.log('SETTING CARD...');
       state.cards.push(payload);
     },
     UPDATE_CARD: (state, payload) => {
+      console.log('UPDATING CARD...');
       state.cards[payload.index] = payload.data;
     },
     REMOVE_CARD: (state, index) => {
+      console.log('REMOVING CARD...');
       state.cards.splice(index, 1);
     },
   },
   actions: {
-    setCard: ({ commit }, card) => {},
-    updateCard: ({ commit }, card) => {},
-    deleteCard: ({ commit }, cardIndex) => {},
+    refreshLocalStorage: ({ state }) => {
+      window.localStorage.setItem('cards', JSON.stringify(state.cards));
+    },
+    populateCards: ({ commit }) => {
+      console.log('POPULATE CARDS...');
+      const cardsLocalStorage = window.localStorage.getItem('cards');
+      console.log('CARDS LOCALSTORAGE...');
+
+      if (!cardsLocalStorage) {
+        commit('SET_CARDS', []);
+        window.localStorage.setItem('cards', JSON.stringify([]));
+      } else {
+        commit('SET_CARDS', JSON.parse(cardsLocalStorage));
+      }
+    },
+    setCard: ({ commit, dispatch }, card) => {
+      console.log('ACTION - SET CARD', card);
+      commit('SET_CARD', card);
+      dispatch('refreshLocalStorage');
+    },
+    updateCard: ({ commit, dispatch }, card) => {
+      console.log('ACTION - UPDATE CARD', card);
+      commit('UPDATE_CARD', card);
+      dispatch('refreshLocalStorage');
+    },
+    deleteCard: ({ commit, dispatch, state }, id) => {
+      const cardIndex = state.cards.findIndex(card => card.id === id);
+      commit('REMOVE_CARD', cardIndex);
+      dispatch('refreshLocalStorage');
+    },
     createNewCard: () => {
       return {
         id: null,
         name: '',
         slug: '',
         image: '',
-        brand: 0,
-        category: 0,
+        brand: null,
+        category: null,
         creditCardLimit: '',
         feeAmount: '',
       };
+    },
+    createNewIdToCard: ({ state }) => {
+      const listSorted =
+        state.cards.length > 0
+          ? state.cards.sort(function(a, b) {
+              return a.id - b.id;
+            })
+          : [];
+      let majorAtualId = listSorted.length > 0 ? listSorted[listSorted.length - 1].id : 0;
+      console.log('majorAtualId', majorAtualId);
+      console.log('majorAtualId++', majorAtualId++);
+      return majorAtualId++;
     },
   },
   getters: {
