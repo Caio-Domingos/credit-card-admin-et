@@ -79,12 +79,26 @@ export default {
     setCard: ({ commit }, card) => {},
     updateCard: ({ commit }, card) => {},
     deleteCard: ({ commit }, cardIndex) => {},
+    createNewCard: () => {
+      return {
+        id: null,
+        name: '',
+        slug: '',
+        image: '',
+        brand: 0,
+        category: 0,
+        creditCardLimit: '',
+        feeAmount: '',
+      };
+    },
   },
   getters: {
     getAllCards: state => {
       return state.cards;
     },
-    getOneCard: (state, id) => {
+    getCardById: state => id => {
+      console.log('id', id);
+      console.log('state cards', state.cards);
       return state.cards.find(card => card.id === id);
     },
   },

@@ -16,4 +16,14 @@ export default {
   created() {
     this.cards = this.getAllCards;
   },
+  methods: {
+    goEdit(id) {
+      console.log('Edit', id);
+      this.$router.push(`/card-details/${id}`);
+    },
+    goNew() {
+      console.log('New');
+      this.$router.push(`/card-details`);
+    },
+  },
 };

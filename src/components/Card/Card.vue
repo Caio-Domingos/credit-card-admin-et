@@ -13,7 +13,13 @@
         <span v-if="card.feeAmount">Fee Amount - {{ card.feeAmount }}</span>
       </div>
     </div>
-    <div v-if="!card" id="Card" class="card-add" :style="{ backgroundColor: '#00000040' }">
+    <div
+      v-if="!card"
+      id="Card"
+      class="card-add"
+      :style="{ backgroundColor: '#00000040' }"
+      @click="$emit('new-card')"
+    >
       <font-awesome-icon icon="plus" size="lg" />
     </div>
   </div>

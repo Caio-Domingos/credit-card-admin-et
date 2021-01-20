@@ -3,12 +3,32 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faPlus,
+  faEdit,
+  faUser,
+  faCheck,
+  faUpload,
+  faExclamationCircle,
+  faCreditCard,
+  faDollarSign,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 require('@/assets/bulma.scss');
 
-library.add(faPlus, faTimes, faEdit);
+library.add(
+  faPlus,
+  faTimes,
+  faEdit,
+  faUser,
+  faCheck,
+  faUpload,
+  faExclamationCircle,
+  faCreditCard,
+  faDollarSign
+);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;

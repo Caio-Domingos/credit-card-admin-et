@@ -33,13 +33,9 @@ export default {
   },
   methods: {},
   created() {
-    console.log('LOG CARD', this.card);
     if (!this.card) return;
 
     this.brand = this.getBrand(this.card.brand);
     this.category = this.getCategory(this.card.category);
-    console.log('card', this.card);
-    console.log('brand', this.brand);
-    console.log('category', this.category);
   },
 };

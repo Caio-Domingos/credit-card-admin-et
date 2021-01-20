@@ -13,5 +13,11 @@
     text-align: center;
     color: #2c3e50;
     padding: 16px;
+
+    min-height: 100vh;
+  }
+
+  .t-capitalize {
+    text-transform: capitalize;
   }
 </style>
